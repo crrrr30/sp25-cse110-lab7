@@ -6,16 +6,12 @@ on:
 jobs:
   deploy-jsdocs:
     runs-on: ubuntu-latest
-    container: node:lts-alpine
+    container: 
+      # by claude 3.7 sonnet thinking
+      image: ghcr.io/puppeteer/puppeteer:latest
+      options: --shm-size=2gb
 
     steps:
-      - name: install chrome stuff
-        run: |
-          # by claude 3.7 sonnet thinking
-          apk add --no-cache chromium
-          export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-          export PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-
       - name: Checkout repo
         uses: actions/checkout@v4
 
