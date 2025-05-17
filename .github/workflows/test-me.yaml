@@ -24,7 +24,11 @@ jobs:
           cat > jest-puppeteer.config.js<<EOF
           module.exports = {
             launch: {
-              headless: true
+              headless: true,
+              args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox'
+              ]
             }
           }
           EOF
