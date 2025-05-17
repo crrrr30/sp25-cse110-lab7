@@ -1,0 +1,38 @@
+name: Lab 7 Tests
+
+on:
+  push
+
+jobs:
+  deploy-jsdocs:
+    runs-on: ubuntu-latest
+    container: node:lts-alpine
+
+    steps:
+      - name: install chrome stuff
+        run: |
+          # by claude 3.7 sonnet thinking
+          apk add --no-cache chromium
+          export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+          export PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: install stuff
+        run: |
+          npm install
+
+      - name: lets not change the given code from template
+        run: |
+          cat > jest-puppeteer.config.js<<EOF
+          module.exports = {
+            launch: {
+              headless: true
+            }
+          }
+          EOF
+
+      - name: Run tests
+        run: |
+          npm run test
